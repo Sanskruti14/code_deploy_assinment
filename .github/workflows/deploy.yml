@@ -27,7 +27,7 @@ jobs:
     - name: Create PEM file
       run: |
         echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
-        chmod 400 key.pem
+        chmod 400 sanu.pem
 
     # 4. Run your custom deployment script!
     - name: Execute Deployment
