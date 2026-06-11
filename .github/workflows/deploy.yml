@@ -25,6 +25,8 @@ jobs:
 
     # 3. Securely recreate your key.pem file from the GitHub Secret
     - name: Create PEM file
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
         echo "${{ secrets.EC2_SSH_KEY }}" > sanu.pem
         chmod 400 sanu.pem
