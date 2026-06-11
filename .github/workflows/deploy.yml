@@ -27,10 +27,7 @@ jobs:
    # 3. Securely recreate your key file and strip Windows line endings
     - name: Create PEM file
       run: |
-        cat << 'EOF' > sanu.pem
-        ${{ secrets.EC2_SSH_KEY }}
-        EOF
-        sed -i 's/\r$//' sanu.pem
+        echo "${{ secrets.EC2_SSH_KEY }}" > sanu.pem
         chmod 400 sanu.pem
 
     # 4. Run your custom deployment script!
