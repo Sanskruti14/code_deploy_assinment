@@ -31,4 +31,4 @@ jobs:
 
     # 4. Run your custom deployment script!
     - name: Execute Deployment
-      run: python ec2_to_deploy.py
+      run: python deploy_to_ec2.py
