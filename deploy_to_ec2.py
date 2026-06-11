@@ -1,6 +1,6 @@
 import paramiko
 
-host = " 13.233.225.252 "
+host = "13.233.225.252 "
 
 username = "ubuntu"
 
