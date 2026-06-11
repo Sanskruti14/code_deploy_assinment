@@ -26,5 +26,5 @@ jobs:
     - name: Execute Deployment
       env:
         # Pass the secret straight into Python memory
-        B64_KEY: ${{ secrets.EC2_SSH_KEY }}
+        B64_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: python deploy_to_ec2.py
