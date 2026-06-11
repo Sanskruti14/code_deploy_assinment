@@ -3,18 +3,16 @@ name: Run Paramiko Deployment
 on:
   push:
     branches:
-      - main  # This triggers the process whenever you push to main
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Grab your code from the repo
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Install Python and your Paramiko library
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -23,17 +21,10 @@ jobs:
     - name: Install dependencies
       run: pip install paramiko
 
-    # 3. Securely recreate your key.pem file from the GitHub Secret
-   # 3. Securely recreate your key file and strip Windows line endings
-    - name: Create PEM file
-      env:
-        # Pull the secret safely into an environment variable first
-        B64_KEY: ${{ secrets.EC2_SSH_KEY }}
-      run: |
-        # tr -d '\n\r ' instantly deletes all spaces and line-breaks before decoding
-        echo "$B64_KEY" | tr -d '\n\r ' | base64 --decode > sanu.pem
-        chmod 400 sanu.pem
-
-    # 4. Run your custom deployment script!
+    # We deleted the messy file creation step!
+    
     - name: Execute Deployment
+      env:
+        # Pass the secret straight into Python memory
+        B64_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: python deploy_to_ec2.py
