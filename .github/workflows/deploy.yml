@@ -1,20 +1,34 @@
-name: Python Demo
+name: Run Paramiko Deployment
 
 on:
   push:
     branches:
-      - main
+      - main  # This triggers the process whenever you push to main
 
 jobs:
-
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Grab your code from the repo
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - uses: actions/checkout@v4
+    # 2. Install Python and your Paramiko library
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
 
-      - name: Run Python
+    - name: Install dependencies
+      run: pip install paramiko
 
-        run: python main.py
+    # 3. Securely recreate your key.pem file from the GitHub Secret
+    - name: Create PEM file
+      run: |
+        echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+        chmod 400 key.pem
+
+    # 4. Run your custom deployment script!
+    - name: Execute Deployment
+      run: python ec2_to_deploy.py
